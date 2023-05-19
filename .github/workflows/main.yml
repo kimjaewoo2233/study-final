@@ -57,9 +57,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
       run: |
         aws deploy create-deployment \
-        --application-name gitaction \
+        --application-name code-deploy-custom \
         --deployment-config-name CodeDeployDefault.AllAtOnce \
-        --deployment-group-name gitactions-CodeDeploy \
+        --deployment-group-name custom \
         --file-exists-behavior OVERWRITE \
         --s3-location bucket=gitactions-test-spring,bundleType=zip,key=coinTalk.zip \
         --region ap-northeast-2 \
