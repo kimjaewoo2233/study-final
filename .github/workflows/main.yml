@@ -38,6 +38,11 @@ jobs:
         run: zip -r ./coinTalk.zip ./deploy
         shell: bash
 
+      # 압축 풀기
+      - name: Unzip deployment package
+        run: unzip -o ./coinTalk.zip -d ./deploy
+        shell: bash
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
