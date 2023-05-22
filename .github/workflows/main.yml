@@ -27,7 +27,7 @@ jobs:
       run: ./gradlew clean build
           # 디렉토리 생성
     - name: Make Directory
-      run: mkdir -p deploy
+      run: mkdir -p /home/ubuntu/action/deploy
         
     # Jar 파일 복사
     - name: Copy Jar
