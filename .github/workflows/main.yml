@@ -34,6 +34,12 @@ jobs:
       - name: Copy Jar
         run: cp ./build/libs/*.jar ./deploy
 
+      - name: Copy script
+        run: |
+          mkdir -p deploy/scripts
+          cp ./scripts/* ./deploy/scripts
+
+
       - name: Make zip file
         run: zip -r ./coinTalk.zip ./deploy appspec.yml
         shell: bash
@@ -50,10 +56,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ap-northeast-2
 
-      - name: Copy script
-        run: |
-          mkdir -p deploy/scripts
-          cp ./scripts/* ./deploy/scripts
 
 
       # Upload to S3
