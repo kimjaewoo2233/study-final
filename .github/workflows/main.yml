@@ -26,15 +26,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      - name: Make Directory
-        run: mkdir -p /home/ubuntu/action/deploy
-
       # Jar 파일 복사
       - name: Copy Jar
-        run: cp ./build/libs/*.jar /home/ubuntu/action/deploy
+        run: cp ./build/libs/*.jar ./deploy
 
       - name: Make zip file
-        run: zip -r /home/ubuntu/action/coinTalk.zip /home/ubuntu/action/deploy
+        run: zip -r ./coinTalk.zip ./deploy
         shell: bash
 
       - name: Configure AWS credentials
@@ -46,11 +43,11 @@ jobs:
 
       # script files 복사
       - name: Copy script
-        run: cp ./scripts/*.sh /home/ubuntu/action/deploy
+        run: cp ./scripts/*.sh ./deploy
 
       # Upload to S3
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 /home/ubuntu/action/coinTalk.zip s3://git-test-s3-custom
+        run: aws s3 cp --region ap-northeast-2 ./coinTalk.zip s3://git-test-s3-custom
 
       # Deploy
       - name: Deploy
