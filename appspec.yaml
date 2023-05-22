@@ -12,7 +12,6 @@ permissions:
     owner: ubuntu
     group: ubuntu
 
-
 hooks:
   ApplicationStart:
     - location: scripts/deploy.sh
