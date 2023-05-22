@@ -41,7 +41,9 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
-
+bootJar {
+    enabled = false
+}
 tasks.named('test') {
     useJUnitPlatform()
 }
