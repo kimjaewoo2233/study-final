@@ -51,7 +51,9 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Copy script
-        run: cp -R ./scripts/* ./deploy
+        run: |
+          mkdir -p deploy/scripts
+          cp ./scripts/* ./deploy/scripts
 
 
       # Upload to S3
