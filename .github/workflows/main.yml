@@ -31,10 +31,10 @@ jobs:
         
     # Jar 파일 복사
     - name: Copy Jar
-      run: cp ./build/libs/*.jar ./deploy
+      run: cp ./build/libs/*.jar /home/ubuntu/action/deploy
 
     - name: Make zip file
-      run: zip -r ./coinTalk.zip ./deploy
+      run: zip -r /home/ubuntu/action/coinTalk.zip /home/ubuntu/action/deploy
       shell: bash
 
     - name: Configure AWS credentials
