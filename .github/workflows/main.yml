@@ -34,7 +34,7 @@ jobs:
         run: echo "Skipping Jar file copy"
 
       - name: Make zip file
-        run: zip -r /home/ubuntu/action/coinTalk.zip /home/ubuntu/action/deploy
+        run: zip -r /home/ubuntu/action/coinTalk.zip deploy
         shell: bash
 
       - name: Configure AWS credentials
