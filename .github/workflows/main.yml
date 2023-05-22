@@ -35,7 +35,7 @@ jobs:
         run: cp ./build/libs/*.jar ./deploy
 
       - name: Make zip file
-        run: zip -r ./coinTalk.zip ./deploy
+        run: zip -r ./coinTalk.zip ./deploy appspec.yml
         shell: bash
 
       # 압축 풀기
