@@ -50,9 +50,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ap-northeast-2
 
-      # script files 복사
       - name: Copy script
-        run: cp ./deploy/scripts/*.sh ./deploy
+        run: cp ./scripts/deploy.sh ./deploy
+
 
       # Upload to S3
       - name: Upload to S3
