@@ -52,7 +52,7 @@ jobs:
 
       # script files 복사
       - name: Copy script
-        run: cp ./scripts/*.sh ./deploy
+        run: cp ./deploy/scripts/*.sh ./deploy
 
       # Upload to S3
       - name: Upload to S3
