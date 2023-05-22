@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <button id="btn">밴드 로그인 고고</button>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let baseUrl = "https://auth.band.us/oauth2";
+        let endpoint = "/authorize";
+        let clientId = [[${clientId}]];
+        let redirectURI = [[${redirectURI}]]
+        // 파라미터 추가
+        let queryParams = [];
+        queryParams.push("response_type=code");
+        queryParams.push("client_id="+clientId);
+        queryParams.push("redirect_uri="+redirectURI);
+
+        let urlWithParams = baseUrl + endpoint + "?" + queryParams.join("&");
+        let button = document.getElementById("btn");
+
+        button.addEventListener("click", function() {
+            location.href = urlWithParams;
+        });
+    </script>
+</body>
+</html>
