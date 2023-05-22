@@ -14,50 +14,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17  # JDK 17로 변경
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'  # JDK 17으로 변경
-        distribution: 'temurin'
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-      
-    - name: Build with Gradle
-      run: ./gradlew clean build
-          # 디렉토리 생성
-    - name: Make Directory
-      run: mkdir -p /home/ubuntu/action/deploy
-        
-    # Jar 파일 복사
-    - name: Copy Jar
-      run: cp ./build/libs/*.jar /home/ubuntu/action/deploy
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-    - name: Make zip file
-      run: zip -r /home/ubuntu/action/coinTalk.zip /home/ubuntu/action/deploy
-      shell: bash
+      - name: Build with Gradle
+        run: ./gradlew clean build
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-        aws-region: ap-northeast-2
+      - name: Make Directory
+        run: mkdir -p deploy
 
-  # script files 복사
-    - name: Copy script
-      run: cp ./scripts/*.sh ./deploy
-    - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./coinTalk.zip s3://git-test-s3-custom
+      # Jar 파일 복사
+      - name: Copy Jar
+        run: echo "Skipping Jar file copy"
+
+      - name: Make zip file
+        run: zip -r /home/ubuntu/action/coinTalk.zip /home/ubuntu/action/deploy
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      # script files 복사
+      - name: Copy script
+        run: cp ./scripts/*.sh ./deploy
+
+      # Upload to S3
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 /home/ubuntu/action/coinTalk.zip s3://git-test-s3-custom
 
       # Deploy
-    - name: Deploy
-      run: |
-        aws deploy create-deployment \
-        --application-name git-test-code \
-        --deployment-config-name CodeDeployDefault.AllAtOnce \
-        --deployment-group-name git-test-code \
-        --file-exists-behavior OVERWRITE \
-        --s3-location bucket=git-test-s3-custom,bundleType=zip,key=coinTalk.zip \
-        --region ap-northeast-2 \
-      
+      - name: Deploy
+        run: |
+          aws deploy create-deployment \
+          --application-name git-test-code \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name git-test-code \
+          --file-exists-behavior OVERWRITE \
+          --s3-location bucket=git-test-s3-custom,bundleType=zip,key=coinTalk.zip \
+          --region ap-northeast-2
